@@ -1,0 +1,40 @@
+{% extends "rats/base.html"%}
+
+{% block content %}
+    <style>
+        h3, h4, a,p{
+            text-align: center;
+            border-radius: 10px;
+        }
+        div.outer{
+            border-radius: 40px;
+            text-align:center;
+            /*background-color: rgba(0,200,200,.5);*/
+        }
+        input, a{
+            border-radius: 10px;
+        }
+        div.w3-container{
+            border-radius: 40px;
+        }
+        div.w3-main{ /* THIS OVERRIDES THE w3-main CLASS IN THE W3.CSS */
+            margin: 0 300px 0 0;
+        }
+    </style>
+
+    <div class="outer">
+        <h1>Welcome!</h1>
+        <h5>Please login or register to continue.</h5>
+
+        <div class="w3-container w3-dark-grey w3-padding-32">
+            <div class="w3-container" align="center">
+                <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %} 
+                    <h2>Registration</h2><hr>
+                    <h4 style="margin:0 150px;">{{UserForm.as_p}}</h4>
+                    <button type="submit" class="btn btn-default" style="border-radius:10px;">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

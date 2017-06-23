@@ -1,7 +1,49 @@
 {% extends "rats/base.html"%}
 
 {% block content %}
-    Hello World!
+    <style>
+        h3, h4, a,p{
+            text-align: center;
+            border-radius: 10px;
+        }
+        div.outer{
+            border-radius: 40px;
+            text-align:center;
+            /*background-color: rgba(0,200,200,.5);*/
+        }
+        input, a{
+            border-radius: 10px;
+        }
+        div.w3-container{
+            border-radius: 40px;
+        }
+        div.w3-main{ /* THIS OVERRIDES THE w3-main CLASS IN THE W3.CSS */
+            margin: 0 300px 0 0;
+        }
+    </style>
 
-    LOGIN
+    <div class="outer">
+        <h1>Welcome!</h1>
+        <h5>Please login or register to continue.</h5>
+
+        <div class="w3-container w3-dark-grey w3-padding-32">
+            <div class="w3-container" align="center">
+                    <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                        {% if form.errors %}
+                            <h5 style="color:red;">Your username and password didn't match. Please try again.</h5>
+                        {% endif %}
+                        <h2>User Login</h2><hr>
+                        <h4>{{ form.username.label_tag }}&nbsp &nbsp{{ form.username }}<h4>
+                        <h4>{{ form.password.label_tag }}&nbsp &nbsp{{ form.password }}</h4>
+                        <h4><h4>
+                        <input type="submit" value="Login" />
+                        <!--<input type="hidden" name="next" value="{{ next }}" />-->
+                    </form>
+                    <hr>OR &nbsp 
+                    <a class="btn btn-default" href="{% url 'register' %}" style="border-radius:10px;">Sign Up!</a>
+                    
+            </div>
+        </div>
+    </div>
 {% endblock %}

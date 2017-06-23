@@ -129,6 +129,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+LOGIN_REDIRECT_URL = 'home/'
+
 # HEROKU CONFIGURATION
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
