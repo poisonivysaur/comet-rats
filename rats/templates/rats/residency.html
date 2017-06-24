@@ -1,0 +1,43 @@
+{% extends "rats/base.html"%}
+
+{% block sidenav %}
+    <div class="w3-bar-block">
+        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+        <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Overview</a>
+        <a href="{% url 'residency' %}" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-calendar fa-fw"></i>  Residency</a>
+        <a href="{% url 'attendance' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-check-o fa-fw"></i>  Attendance</a>
+        <a href="{% url 'teams' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Teams</a>
+        <a href="{% url 'projects' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-code fa-fw"></i>  Projects</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <a href="{% url 'residency' %}" style="text-decoration:none;"><h4><b><i class="fa fa-calendar"></i> My Residencies</b></h4></a>
+        <a href="{% url 'res_new' %}" style="text-decoration:none;"><h5><i class="fa fa-plus"></i> Add Residency</h5></a>
+    </header>
+
+    <div class="w3-row-padding w3-margin-bottom" style="margin:20px 50px">
+    {% block body%}
+        {% for res in residencies %}
+            <div class="w3-quarter" id="{{res.pk}}">
+            <a href="{% url 'res_detail' pk=res.pk %}" style="text-decoration:none;">
+            <div class="w3-container w3-blue w3-padding-16" style="margin:16px 0;">
+                <div class="w3-left"><i class="fa fa-calendar w3-xlarge"></i></div>
+                <div class="w3-right">
+                   <h3>{{res.date}}</h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h5>Start at: {{res.start_time}}</h5>
+                <h5>Ends at: {{res.end_time}}</h5>
+                <h5>{{res.get_duration_in_mins}} minutes</h5>
+            </div>
+            </a>
+            </div>
+        {% empty %}
+            <h3>No residency schedules yet :(</h3>
+        {% endfor %}
+    {% endblock %}
+    </div>
+{% endblock %}

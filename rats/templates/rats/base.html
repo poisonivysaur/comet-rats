@@ -17,7 +17,11 @@
         <!-- Top container -->
         <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
             <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-            <span class="w3-bar-item w3-right">Residency Attendance and Tracking System (RATS)</span>
+            <span class="w3-bar-item w3-right">DLSU COMET Residency Attendance and Tracking System (RATS)
+                <img style="height:45px;" src="https://scontent.fmnl4-6.fna.fbcdn.net/v/t34.0-12/19433708_1047623838701577_2071479408_n.png?oh=0b7a387748829e7e225dcf6abae2740c&oe=594FDA0A"/>
+            </span>
+            
+            
         </div>
 
         {% if user.is_authenticated %}
@@ -30,29 +34,22 @@
                 </div>
                 
                 <div class="w3-col s8 w3-bar">
-                <span>Welcome, <strong>{{user.username}}</strong></span><br>
+                <span><h3>Welcome, <strong>{{user.username}}</strong>!</h3></span><br>
+                <!--
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
-                <a href="{% url 'logout' %}">Logout</a>
+                -->
+                <a href="{% url 'logout' %}" style="text-align:center;">Logout</a>
                 </div>
             </div>
             <hr>
             <div class="w3-container">
                 <h5>Dashboard</h5>
             </div>
-            <div class="w3-bar-block">
-                <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Traffic</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
-                <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
-            </div>
+            {% block sidenav%}
+            {% endblock %}
+            
         </nav>
         
         <!-- Overlay effect when opening sidebar on small screens -->
@@ -60,13 +57,13 @@
         </div>
         {% endif %}
         <!-- !PAGE CONTENT! -->
-        <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+        <div class="w3-main" style="margin-left:300px;margin-top:53px;">
             {% block content %}
             {% endblock %}
             <!-- Footer -->
             <footer class="w3-container w3-padding-16 w3-light-grey">
                 <!--<h4>FOOTER</h4>-->
-                <p>Powered by <a href="https://poisonivysaurbridge.pythonanywhere.com" target="_blank">Poison Ivy</a></p>
+                <p style="text-align:center;">Powered by the same <a href="https://poisonivysaurbridge.pythonanywhere.com" target="_blank">Poison Ivy</a> :)</p>
             </footer>
         </div><!-- End page content -->
 
@@ -93,6 +90,19 @@
             mySidebar.style.display = "none";
             overlayBg.style.display = "none";
         }
+        </script>
+
+        
+        <script> // FOR DATE PICKER IN PROJECTS MODULE
+        $(function() {
+            $( ".datepicker" ).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1900:3000",
+            // You can put more options here.
+
+            });
+        });
         </script>
 
     </body>

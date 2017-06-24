@@ -1,0 +1,17 @@
+{% extends 'rats/projects.html' %}
+
+{% block body %}
+    
+    {% if user.is_authenticated %}
+    <a style="text-decoration:none;" href="{% url 'proj_edit' pk=proj.pk %}"><h5><i class="fa fa-edit"></i> Update Project</h5></a>
+    <a style="text-decoration:none;" href="{% url 'proj_remove' pk=proj.pk %}"><h5><i class="fa fa-trash"></i> Remove Project</h5></a>
+    {% endif %}
+    <hr>
+    <h1>{{ proj.name }}</h1>
+    <h3>Date created: {{proj.date_created}}</h3>
+    <h3>Date due: {{ proj.due_date }}</h3>
+
+    <h3>Project status: {{ proj.status|linebreaksbr }}</h3>
+    <hr>
+    
+{% endblock %}

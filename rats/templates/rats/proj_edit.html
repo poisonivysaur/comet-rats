@@ -1,0 +1,15 @@
+{% extends 'rats/projects.html' %}
+
+{% block body %}
+    <hr>
+    <h3>New Project</h3>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}<br>
+        
+        <!--<input type="date" name="due_date">-->
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+    <hr>
+    
+{% endblock %}

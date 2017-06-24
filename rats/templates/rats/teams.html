@@ -1,0 +1,79 @@
+{% extends "rats/base.html"%}
+
+{% block sidenav %}
+    <div class="w3-bar-block">
+        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+        <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Overview</a>
+        <a href="{% url 'residency' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar fa-fw"></i>  Residency</a>
+        <a href="{% url 'attendance' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-check-o fa-fw"></i>  Attendance</a>
+        <a href="{% url 'teams' %}" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Teams</a>
+        <a href="{% url 'projects' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-code fa-fw"></i>  Projects</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-users"></i> My Teams</b></h5>
+    </header>
+
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <!--<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>-->
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Create Teams</h4>
+            <h4><i class="fa fa-users"></i> Join Existing Teams</h4>
+            <h4><i class="fa fa-trash"></i> Remove Teams</h4>
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-code w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Assign Project</h4>
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <!--<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>-->
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Add Team Member</h4>
+            <h4><i class="fa fa-trash"></i> Remove Member</h4>
+            
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Assign Roles</h4>
+        </div>
+        </a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'rats/residency.html' %}
+
+{% block body %}
+    
+    {% if user.is_authenticated %}
+    <a style="text-decoration:none;" href="{% url 'res_edit' pk=res.pk %}"><h5><i class="fa fa-edit"></i> Update Residency</h4></a>
+    <a style="text-decoration:none;" href="{% url 'res_remove' pk=res.pk %}"><h5><i class="fa fa-trash"></i> Remove Residency</h4></a>
+    {% endif %}
+    <hr>
+    <h1>{{ res.date }}</h1>
+    <h3>Start time: {{ res.start_time }}</h3>
+    <h3>End time: {{ res.end_time }}</h3>
+    <h3>Duration in minutes: {{ res.get_duration_in_mins }}</h3>
+    <hr>
+    
+{% endblock %}

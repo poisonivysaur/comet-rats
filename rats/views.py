@@ -5,15 +5,16 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import *
+from .forms import ProjForm, UserForm, ResidencyForm
 from .models import *
 
 # Create your views here.
-def homeURL(request):
+def toHomeURL(request):
     return redirect('home')
 
 def home(request):
-    return render(request, 'rats/home.html')
+    projects = Project.objects.all
+    return render(request, 'rats/home.html',{'projects':projects})
 
 def register(request):
     if request.method == "POST":
@@ -26,14 +27,101 @@ def register(request):
         form = UserForm()
     return render(request,'registration/register.html',{'UserForm' : form})
 
-def attendance(request):
-    return render(request, 'rats/home.html')
 
+################### RESIDENCY MANAGEMENT MODULE ###################
 def residency(request):
-    return render(request, 'rats/home.html')
+    residencies = Residency.objects.all().order_by('date')#.order_by('-due_date')
+    return render(request, 'rats/residency.html', {'residencies':residencies})
 
-def projects(request):
-    return render(request, 'rats/home.html')
+def res_detail(request,pk):
+    res = get_object_or_404(Residency, pk=pk)
+    return render(request, 'rats/res_detail.html', {'res':res})
 
+@login_required
+def res_new(request):
+    if request.method == "POST":
+        form = ResidencyForm(request.POST)
+        if form.is_valid():
+            res = form.save(commit=False)
+            res.save()
+            return redirect ('res_detail', pk=res.pk)
+    else:
+        form = ResidencyForm()
+    return render(request, 'rats/res_edit.html', {'form': form})
+
+@login_required
+def res_edit(request, pk):
+    res = get_object_or_404(Residency, pk=pk)
+    if request.method == "POST":
+        form = ResidencyForm(request.POST, instance=res)
+        if form.is_valid():
+            res = form.save(commit=False)
+            res.save()
+            return redirect('res_detail', pk=res.pk)
+    else:
+        form = ResidencyForm(instance=res)
+    return render(request, 'rats/res_edit.html', {'form': form})
+
+@login_required
+def res_remove(request, pk):
+    res = get_object_or_404(Residency, pk=pk)
+    res.delete()
+    return redirect('residency')
+
+################### ATTENDANCE LOGGING MODULE ###################
+def attendance(request):
+    return render(request, 'rats/attendance.html')
+
+
+################### TEAM MANAGEMENT MODULE ###################
 def teams(request):
-    return render(request, 'rats/home.html')
+    return render(request, 'rats/teams.html')
+
+def team_detail(request,pk):
+    team = get_object_or_404(Team, pk=pk)
+    return render(request, 'rats/team_detail.html', {'team': team})
+
+def team_member_detail():
+    team_member = get_object_or_404(User, pk=pk)
+    return render(request, 'rats/team_member_detail.html', {'team_member':team_member})
+
+################### PROJECT MANAGEMENT MODULE ###################
+def projects(request):
+    projects = Project.objects.all().order_by('due_date')
+    return render(request, 'rats/projects.html', {'projects':projects})
+
+def proj_detail(request,pk):
+    proj = get_object_or_404(Project, pk=pk)
+    return render(request, 'rats/proj_detail.html', {'proj': proj})
+
+@login_required
+def proj_new(request):
+    if request.method == "POST":
+        form = ProjForm(request.POST)
+        if form.is_valid():
+            proj = form.save(commit=False)
+            #due_date = form.cleaned_data['due_date']
+            proj.save()
+            return redirect('proj_detail', pk=proj.pk)
+    else:
+        form = ProjForm()
+    return render(request, 'rats/proj_edit.html', {'form': form})
+
+@login_required
+def proj_edit(request, pk):
+    proj = get_object_or_404(Project, pk=pk)
+    if request.method == "POST":
+        form = ProjForm(request.POST, instance=proj)
+        if form.is_valid():
+            proj = form.save(commit=False)
+            proj.save()
+            return redirect('proj_detail', pk=proj.pk)
+    else:
+        form = ProjForm(instance=proj)
+    return render(request, 'rats/proj_edit.html', {'form': form})
+
+@login_required
+def proj_remove(request, pk):
+    proj = get_object_or_404(Project, pk=pk)
+    proj.delete()
+    return redirect('projects')
