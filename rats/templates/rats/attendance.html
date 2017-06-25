@@ -21,7 +21,7 @@
 
     <div class="w3-row-padding w3-margin-bottom" style="margin:20px 50px">
     {% block body%}
-    
+        
         {% for att in attendances %}
             <div class="w3-quarter" id="{{att.pk}}">
             <a href="{% url 'att_detail' pk=att.pk %}" style="text-decoration:none;">

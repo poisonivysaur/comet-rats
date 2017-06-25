@@ -12,11 +12,15 @@ from .models import *
 def toHomeURL(request):
     return redirect('home')
 
+#@login_required
 def home(request):
-    residencies = Residency.objects.filter(user=request.user)
-    attendances = Attendance.objects.filter(user=request.user)
-    projects = Project.objects.filter(user=request.user)
-    return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies, 'attendances':attendances})
+    if request.user.is_authenticated:
+        residencies = Residency.objects.filter(user=request.user)
+        attendances = Attendance.objects.filter(user=request.user)
+        projects = Project.objects.filter(user=request.user)
+        return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies, 'attendances':attendances})
+    else:
+        return redirect('login')
 
 def register(request):
     if request.method == "POST":
@@ -34,8 +38,11 @@ def toLoginURL(request):
 
 ################### RESIDENCY MANAGEMENT MODULE ###################
 def residency(request):
-    residencies = Residency.objects.filter(user=request.user).order_by('date')#.order_by('-due_date')
-    return render(request, 'rats/residency.html', {'residencies':residencies})
+    if request.user.is_authenticated:
+        residencies = Residency.objects.filter(user=request.user).order_by('date')#.order_by('-due_date')
+        return render(request, 'rats/residency.html', {'residencies':residencies})
+    else:
+        return redirect('login')
 
 def res_detail(request,pk):
     res = get_object_or_404(Residency, pk=pk)
@@ -76,8 +83,11 @@ def res_remove(request, pk):
 
 ################### ATTENDANCE LOGGING MODULE ###################
 def attendance(request):
-    attendances = Attendance.objects.filter(user=request.user).order_by('-residency__date')
-    return render(request, 'rats/attendance.html', {'attendances':attendances})
+    if request.user.is_authenticated:
+        attendances = Attendance.objects.filter(user=request.user).order_by('-residency__date')
+        return render(request, 'rats/attendance.html', {'attendances':attendances})
+    else:
+        return redirect('login')
 
 def att_detail(request,pk):
     att = get_object_or_404(Attendance, pk=pk)
@@ -133,8 +143,11 @@ def team_member_detail():
 
 ################### PROJECT MANAGEMENT MODULE ###################
 def projects(request):
-    projects = Project.objects.filter(user=request.user).order_by('due_date')
-    return render(request, 'rats/projects.html', {'projects':projects})
+    if request.user.is_authenticated:
+        projects = Project.objects.filter(user=request.user).order_by('due_date')
+        return render(request, 'rats/projects.html', {'projects':projects})
+    else:
+        return redirect('login')
 
 def proj_detail(request,pk):
     proj = get_object_or_404(Project, pk=pk)
