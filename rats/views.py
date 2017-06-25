@@ -14,8 +14,8 @@ def toHomeURL(request):
 
 def home(request):
     residencies = Residency.objects.filter(user=request.user)
-    attendances = Attendance.objects.all
-    projects = Project.objects.all
+    attendances = Attendance.objects.filter(user=request.user)
+    projects = Project.objects.filter(user=request.user)
     return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies, 'attendances':attendances})
 
 def register(request):
