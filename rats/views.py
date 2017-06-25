@@ -86,28 +86,30 @@ def att_detail(request,pk):
 @login_required
 def att_new(request):
     if request.method == "POST":
-        form = AttendanceForm(request.POST)
+        form = AttendanceForm(request.user, request.POST)
+        #form.residency.queryset = Residency.objects.filter(user=request.user)
         if form.is_valid():
             att = form.save(commit=False)
             att.user = request.user
             att.save()
             return redirect ('att_detail', pk=att.pk)
     else:
-        form = AttendanceForm()
+        form = AttendanceForm(request.user)
     return render(request, 'rats/att_edit.html', {'form': form})
 
 @login_required
 def att_edit(request, pk):
     att = get_object_or_404(Attendance, pk=pk)
     if request.method == "POST":
-        form = AttendanceForm(request.POST, instance=att)
+        form = AttendanceForm(request.user,request.POST, instance=att)
+        #form.residency.queryset = Residency.objects.filter(user=request.user)
         if form.is_valid():
             att = form.save(commit=False)
             att.user = request.user
             att.save()
             return redirect('att_detail', pk=att.pk)
     else:
-        form = AttendanceForm(instance=att)
+        form = AttendanceForm(request.user,instance=att)
     return render(request, 'rats/att_edit.html', {'form': form})
 
 @login_required

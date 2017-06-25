@@ -4,7 +4,6 @@ from .models import *
 from django.contrib.auth.models import User
 from django.utils.timezone import utc
 
-
 class UserForm(forms.ModelForm):
     
     class Meta:
@@ -28,6 +27,11 @@ class AttendanceForm(forms.ModelForm):
         model = Attendance
         fields = ('residency','status',)
 
+    def __init__(self, user, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        self.fields["residency"].queryset = Residency.objects.filter(user=user)
+        
+
 class ProjForm(forms.ModelForm):
     
     class Meta:
@@ -41,3 +45,5 @@ class ProjForm(forms.ModelForm):
     
     #due_date = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
 
+
+    
