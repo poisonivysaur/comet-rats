@@ -3,11 +3,11 @@
 {% block body %}
     
     {% if user.is_authenticated %}
-    <a style="text-decoration:none;" href="{% url 'att' pk=att.pk %}"><h5><i class="fa fa-edit"></i> Update Attendance Log</h4></a>
+    <a style="text-decoration:none;" href="{% url 'att_edit' pk=att.pk %}"><h5><i class="fa fa-edit"></i> Update Attendance Log</h4></a>
     <a style="text-decoration:none;" href="{% url 'att_remove' pk=att.pk %}"><h5><i class="fa fa-trash"></i> Remove Attendance Log</h4></a>
     {% endif %}
-    <hr>
-    <h1>{{ att.date }}</h1>
+    <hr><!--
+    <h1>{{ att.residency__date }}</h1>-->
     <h3>Start time: {{ att.start_time }}</h3>
     <h3>End time: {{ att.end_time }}</h3>
     <h3>Duration in minutes: {{ att.get_duration_in_mins }}</h3>

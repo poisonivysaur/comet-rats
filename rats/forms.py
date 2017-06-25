@@ -22,7 +22,7 @@ class ResidencyForm(forms.ModelForm):
             'start_time' : forms.TimeInput(attrs={'type':'time'}),
             'end_time' : forms.TimeInput(attrs={'type':'time'})
         }
-      
+     
 class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
@@ -32,7 +32,7 @@ class ProjForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ('name','due_date','status',)
+        fields = ('name','desc','due_date','status',)
         
         widgets = {
             'due_date': forms.DateInput(attrs={'type':'date'})

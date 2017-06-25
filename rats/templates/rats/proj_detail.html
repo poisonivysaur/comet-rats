@@ -8,10 +8,11 @@
     {% endif %}
     <hr>
     <h1>{{ proj.name }}</h1>
-    <h3>Date created: {{proj.date_created}}</h3>
-    <h3>Date due: {{ proj.due_date }}</h3>
+    <h5>{{ proj.desc }}</h5>
+    <h5>Date created: {{proj.date_created}}</h5>
+    <h3 style="color:tomato;">Date due: {{ proj.due_date }}</h3>
 
-    <h3>Project status: {{ proj.status|linebreaksbr }}</h3>
+    <h5>Project status: {{ proj.status|linebreaksbr }}</h5>
     <hr>
     
 {% endblock %}

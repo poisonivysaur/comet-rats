@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.timezone import localtime, now
 from datetime import datetime, date
 
 
 class Residency(models.Model):
-    date = models.DateField(blank=True, null=True)
-    start_time = models.TimeField(blank=True, null=True)
-    end_time = models.TimeField(blank=True, null=True)
+    user = models.ForeignKey('auth.User',null=True)
+    date = models.DateField(default=date.today)
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
     duration_in_mins = models.IntegerField(default=90)
     
     def get_duration_in_mins(self):
@@ -17,11 +19,15 @@ class Residency(models.Model):
         else:
             self.duration_in_mins = int(abs(duration.total_seconds()//60))
             return self.duration_in_mins
-        
+    def __str__(self):
+        return str(self.date)
+
+
 class Attendance(models.Model):
-    residency = models.ForeignKey('rats.Residency', related_name='attendance')
-    start_time = models.TimeField(blank=True, null=True)
-    end_time = models.TimeField(blank=True, null=True)
+    user = models.ForeignKey('auth.User',null=True)
+    residency = models.ForeignKey('rats.Residency', related_name='attendance', null=True)
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=200, null=True)
     
     def start(self):
@@ -36,10 +42,14 @@ class Attendance(models.Model):
             return 0
         else:
             return int(abs(duration.total_seconds()//60))
-
+        
+    def __str__(self):
+        return str(self.residency.date)
 
 class Project(models.Model):
+    user = models.ForeignKey('auth.User',null=True)
     name = models.CharField(max_length=100)
+    desc = models.TextField(default="")
     due_date = models.DateField(blank=True, null=True)
    # team = models.ForeignKey('Team', blank=True, null=True)
     status = models.CharField(max_length=200)
@@ -50,22 +60,4 @@ class Project(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=100)
     max_capacity = models.IntegerField(default=5)
-    '''
-    members = []
-    roles = []
-    projects = []'''
-'''
-    def assignProj(self):
-        asfda
 
-    def addMember(self):
-        asdfasd
-
-    def removeMember(self):
-
-    
-    def assignRoles(self):
-
-
-class User
-'''
