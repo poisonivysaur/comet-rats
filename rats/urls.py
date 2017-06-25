@@ -3,10 +3,15 @@ from . import views
 
 urlpatterns = [
     url(r'^accounts/profile/$', views.toHomeURL, name='homeURL'),
+    url(r'^toLoginURL/$', views.toLoginURL, name='toLoginURL'),
     url(r'^home', views.home, name='home'),
     url(r'^register/$', views.register, name='register'),
     
     url(r'^attendance/$', views.attendance, name='attendance'),
+    url(r'^attendance/new/$', views.att_new, name='att_new'),
+    url(r'^attendance/(?P<pk>\d+)/$', views.att_detail, name='att_detail'),
+    url(r'^attendance/(?P<pk>\d+)/edit/$', views.att_edit, name='att_edit'),
+    url(r'^attendance/(?P<pk>\d+)/remove/$', views.att_remove, name='att_remove'),
 
     url(r'^residency/$', views.residency, name='residency'),
     url(r'^residency/new/$', views.res_new, name='res_new'),

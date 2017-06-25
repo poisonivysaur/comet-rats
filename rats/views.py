@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import ProjForm, UserForm, ResidencyForm
+from .forms import ProjForm, UserForm, ResidencyForm, AttendanceForm
 from .models import *
 
 # Create your views here.
@@ -14,7 +14,8 @@ def toHomeURL(request):
 
 def home(request):
     projects = Project.objects.all
-    return render(request, 'rats/home.html',{'projects':projects})
+    residencies = Residency.objects.all
+    return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies})
 
 def register(request):
     if request.method == "POST":
@@ -27,6 +28,8 @@ def register(request):
         form = UserForm()
     return render(request,'registration/register.html',{'UserForm' : form})
 
+def toLoginURL(request):
+    return redirect('login')
 
 ################### RESIDENCY MANAGEMENT MODULE ###################
 def residency(request):
@@ -70,7 +73,43 @@ def res_remove(request, pk):
 
 ################### ATTENDANCE LOGGING MODULE ###################
 def attendance(request):
-    return render(request, 'rats/attendance.html')
+    attendances = Attendance.objects.all().order_by('-residency.date')
+    return render(request, 'rats/attendance.html', {'attendances':attendances})
+
+def att_detail(request,pk):
+    att = get_object_or_404(Attendance, pk=pk)
+    return render(request, 'rats/att_detail.html', {'att':att})
+
+@login_required
+def att_new(request):
+    if request.method == "POST":
+        form = AttendanceForm(request.POST)
+        if form.is_valid():
+            att = form.save(commit=False)
+            att.save()
+            return redirect ('att_detail', pk=att.pk)
+    else:
+        form = AttendanceForm()
+    return render(request, 'rats/att_edit.html', {'form': form})
+
+@login_required
+def att_edit(request, pk):
+    att = get_object_or_404(Attendance, pk=pk)
+    if request.method == "POST":
+        form = AttendanceForm(request.POST, instance=att)
+        if form.is_valid():
+            att = form.save(commit=False)
+            att.save()
+            return redirect('att_detail', pk=att.pk)
+    else:
+        form = AttendanceForm(instance=att)
+    return render(request, 'rats/att_edit.html', {'form': form})
+
+@login_required
+def att_remove(request, pk):
+    att = get_object_or_404(Attendance, pk=pk)
+    att.delete()
+    return redirect('attendance')
 
 
 ################### TEAM MANAGEMENT MODULE ###################

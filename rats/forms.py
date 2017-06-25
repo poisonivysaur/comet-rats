@@ -22,7 +22,11 @@ class ResidencyForm(forms.ModelForm):
             'start_time' : forms.TimeInput(attrs={'type':'time'}),
             'end_time' : forms.TimeInput(attrs={'type':'time'})
         }
-        
+      
+class AttendanceForm(forms.ModelForm):
+    class Meta:
+        model = Attendance
+        fields = ('residency','status',)
 
 class ProjForm(forms.ModelForm):
     

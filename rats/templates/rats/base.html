@@ -55,7 +55,7 @@
         <!-- Overlay effect when opening sidebar on small screens -->
         <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay">
         </div>
-        {% endif %}
+        
         <!-- !PAGE CONTENT! -->
         <div class="w3-main" style="margin-left:300px;margin-top:53px;">
             {% block content %}
@@ -66,7 +66,16 @@
                 <p style="text-align:center;">Powered by the same <a href="https://poisonivysaurbridge.pythonanywhere.com" target="_blank">Poison Ivy</a> :)</p>
             </footer>
         </div><!-- End page content -->
-
+        {% else %}
+            <div style="margin: 10% 30%">
+            <h2>Please Login to continue.</h2><hr>
+            
+            <form method="POST" action="{% url 'toLoginURL' %}">
+                {% csrf_token %} 
+                <button type="submit" class="btn btn-default" style="border-radius:10px;">login</button>
+            </form>
+            </div>
+        {% endif %}
         <script>
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");
