@@ -1,0 +1,13 @@
+{% extends 'rats/teams.html' %}
+
+{% block body %}
+    <hr>
+    <h3>New Team</h3>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}<br>
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+    <hr>
+    
+{% endblock %}

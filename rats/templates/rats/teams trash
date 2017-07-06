@@ -1,0 +1,57 @@
+<div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Create Teams</h4>
+            <h4><i class="fa fa-users"></i> Join Existing Teams</h4>
+            <h4><i class="fa fa-trash"></i> Remove Teams</h4>
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-code w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Assign Project</h4>
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <!--<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>-->
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Add Team Member</h4>
+            <h4><i class="fa fa-trash"></i> Remove Member</h4>
+
+        </div>
+        </a>
+        </div>
+
+        <div class="w3-quarter">
+        <a href="{% url 'teams' %}" style="text-decoration:none;">
+        <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+            <div class="w3-right">
+            <h3></h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4><i class="fa fa-plus"></i> Assign Roles</h4>
+        </div>
+        </a>
+        </div>
+    </div>

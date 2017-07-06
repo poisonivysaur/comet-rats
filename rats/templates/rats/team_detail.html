@@ -1,0 +1,16 @@
+{% extends 'rats/teams.html' %}
+
+{% block body %}
+    
+    {% if user.is_authenticated %}
+    <a style="text-decoration:none;" href="{% url 'team_edit' pk=team.pk %}"><h5><i class="fa fa-edit"></i> Update Team</h5></a>
+    <a style="text-decoration:none;" href="{% url 'team_remove' pk=team.pk %}"><h5><i class="fa fa-trash"></i> Remove Team</h5></a>
+    {% endif %}
+    <hr>
+    <h1>{{ team.team_name }}</h1>
+    <h5>{{ team.max_capacity }}</h5>
+    <h5>Team members: {{team.members}}</h5>
+    <h5>Project assigned: {{team.project}}</h5>
+    <hr>
+    
+{% endblock %}
