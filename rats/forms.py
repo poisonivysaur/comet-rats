@@ -50,5 +50,11 @@ class ProjForm(forms.ModelForm):
     
     #due_date = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
 
+class TeamForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ('members', 'team_name', 'max_capacity', 'project',)
 
-    
+    def __init__(self, user, *args, **kwargs):
+        super(TeamForm, self).__init__(*args, **kwargs)
+        self.fields["members"].queryset = User.objects.all()

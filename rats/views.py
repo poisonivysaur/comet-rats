@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import UserForm, ProjForm, ResidencyForm, AttendanceForm
+from .forms import UserForm, ProjForm, ResidencyForm, AttendanceForm, TeamForm
 from .models import *
 
 # Create your views here.
@@ -97,7 +97,6 @@ def att_detail(request,pk):
 def att_new(request):
     if request.method == "POST":
         form = AttendanceForm(request.user, request.POST)
-        #form.residency.queryset = Residency.objects.filter(user=request.user)
         if form.is_valid():
             att = form.save(commit=False)
             att.user = request.user
@@ -131,11 +130,50 @@ def att_remove(request, pk):
 
 ################### TEAM MANAGEMENT MODULE ###################
 def teams(request):
-    return render(request, 'rats/teams.html')
+    if request.user.is_authenticated:
+        teams = Team.objects.filter(user=request.user).order_by('team_name')
+        return render(request, 'rats/teams.html', {'teams':teams})
+    else:
+        return redirect('login')
 
 def team_detail(request,pk):
     team = get_object_or_404(Team, pk=pk)
     return render(request, 'rats/team_detail.html', {'team': team})
+
+@login_required
+def team_new(request):
+    if request.method == "POST":
+        form = TeamForm(request.user, request.POST)
+        if form.is_valid():
+            team = form.save(commit=False)
+            team.user = request.user
+            team.save()
+            return redirect ('team_detail', pk=team.pk)
+    else:
+        form = TeamForm(request.user)
+    return render(request, 'rats/team_edit.html', {'form': form})
+
+@login_required
+def team_edit(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    if request.method == "POST":
+        form = TeamForm(request.user,request.POST, instance=team)
+        #form.residency.queryset = Residency.objects.filter(user=request.user)
+        if form.is_valid():
+            team = form.save(commit=False)
+            team.user = request.user
+            team.save()
+            return redirect('team_detail', pk=team.pk)
+    else:
+        form = TeamForm(request.user,instance=team)
+    return render(request, 'rats/team_edit.html', {'form': form})
+
+@login_required
+def team_remove(request, pk):
+    team = get_object_or_404(Team, pk=pk)
+    team.delete()
+    return redirect('teams')
+
 
 def team_member_detail():
     team_member = get_object_or_404(User, pk=pk)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.timezone import localtime, now
 from datetime import datetime, date
@@ -46,6 +47,25 @@ class Attendance(models.Model):
     def __str__(self):
         return str(self.residency.date)
 
+
+class Team(models.Model):
+    user = models.ForeignKey('auth.User', related_name='ownerk', null=True)
+    members = models.ManyToManyField(User)
+    team_name = models.CharField(max_length=100)
+    max_capacity = models.IntegerField(default=5)
+    project = models.ForeignKey('rats.Project', null = True)
+
+    @classmethod
+    def addMember(cls, user, new_team):
+        team, created = cls.objects.get_or_create(
+            user = user
+        )
+        team.members.add(new_team)
+
+    def __str__(self):
+        return str(self.team_name)
+
+
 class Project(models.Model):
     user = models.ForeignKey('auth.User',null=True)
     name = models.CharField(max_length=100)
@@ -55,9 +75,7 @@ class Project(models.Model):
     status = models.CharField(max_length=200)
     date_created = models.DateTimeField(default=timezone.now)
     
+    def __str__(self):
+        return str(self.name)
 
-
-class Team(models.Model):
-    name = models.CharField(max_length=100)
-    max_capacity = models.IntegerField(default=5)
 

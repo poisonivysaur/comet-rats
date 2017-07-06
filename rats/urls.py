@@ -20,7 +20,10 @@ urlpatterns = [
     url(r'^attendance/(?P<pk>\d+)/remove/$', views.att_remove, name='att_remove'),
 
     url(r'^teams/$', views.teams, name='teams'),
+    url(r'^teams/new/$', views.team_new, name='team_new'),
     url(r'^teams/(?P<pk>\d+)/$', views.team_detail, name='team_detail'),
+    url(r'^teams/(?P<pk>\d+)/edit/$', views.team_edit, name='team_edit'),
+    url(r'^teams/(?P<pk>\d+)/remove/$', views.team_remove, name='team_remove'),
 
     url(r'^projects/$', views.projects, name='projects'),
     url(r'^projects/new/$', views.proj_new, name='proj_new'),

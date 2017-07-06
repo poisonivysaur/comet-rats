@@ -15,65 +15,31 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-users"></i> My Teams</b></h5>
+        <a href="{% url 'teams' %}" style="text-decoration:none;"><h4><b><i class="fa fa-code"></i> My Teams</b></h4></a>
+        <a href="{% url 'team_new' %}" style="text-decoration:none;"><h5><i class="fa fa-plus"></i> Add Team</h5></a>
     </header>
 
-    <div class="w3-row-padding w3-margin-bottom">
-        <div class="w3-quarter">
-        <a href="{% url 'teams' %}" style="text-decoration:none;">
-        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-            <!--<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-            <div class="w3-right">
-            <h3></h3>
-            </div>-->
-            <div class="w3-clear"></div>
-            <h4><i class="fa fa-plus"></i> Create Teams</h4>
-            <h4><i class="fa fa-users"></i> Join Existing Teams</h4>
-            <h4><i class="fa fa-trash"></i> Remove Teams</h4>
-        </div>
-        </a>
-        </div>
+    <div class="w3-row-padding w3-margin-bottom" style="margin:20px 50px">
+    {% block body%}
+        {% for team in teams %}
+            <div class="w3-quarter" id="{{team.pk}}">
+            <a href="{% url 'team_detail' pk=team.pk %}" style="text-decoration:none;">
+            <div class="w3-container w3-teal w3-padding-16" style="margin:16px 0;">
+                <div class="w3-left"><i class="fa fa-users w3-xxlarge"></i></div>
+                <div class="w3-right">
+                    <h3>{{team.team_name}}</h3>
 
-        <div class="w3-quarter">
-        <a href="{% url 'teams' %}" style="text-decoration:none;">
-        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-            <div class="w3-left"><i class="fa fa-code w3-xxxlarge"></i></div>
-            <div class="w3-right">
-            <h3></h3>
+                </div>
+                <div class="w3-clear"></div>
+                <h5>Members: {{team.max_capacity}}</h5>
+                <h5>Project Assigned: {{team.project}}</h5>
             </div>
-            <div class="w3-clear"></div>
-            <h4>Assign Project</h4>
-        </div>
-        </a>
-        </div>
-
-        <div class="w3-quarter">
-        <a href="{% url 'teams' %}" style="text-decoration:none;">
-        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-            <!--<div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>-->
-            <div class="w3-right">
-            <h3></h3>
+            </a>
             </div>
-            <div class="w3-clear"></div>
-            <h4><i class="fa fa-plus"></i> Add Team Member</h4>
-            <h4><i class="fa fa-trash"></i> Remove Member</h4>
-            
-        </div>
-        </a>
-        </div>
-
-        <div class="w3-quarter">
-        <a href="{% url 'teams' %}" style="text-decoration:none;">
-        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-            <div class="w3-right">
-            <h3></h3>
-            </div>
-            <div class="w3-clear"></div>
-            <h4><i class="fa fa-plus"></i> Assign Roles</h4>
-        </div>
-        </a>
-        </div>
+        {% empty %}
+            <h3>No teams yet :(</h3>
+        {% endfor %}
+    {% endblock %}
     </div>
 
 {% endblock %}
