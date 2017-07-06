@@ -25,7 +25,12 @@ class ResidencyForm(forms.ModelForm):
 class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
-        fields = ('residency','status',)
+        fields = ('residency','start_time', 'end_time', 'status',)
+        widgets = {
+
+            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'end_time': forms.TimeInput(attrs={'type': 'time'})
+        }
 
     def __init__(self, user, *args, **kwargs):
         super(AttendanceForm, self).__init__(*args, **kwargs)

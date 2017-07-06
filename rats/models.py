@@ -26,8 +26,8 @@ class Residency(models.Model):
 class Attendance(models.Model):
     user = models.ForeignKey('auth.User',null=True)
     residency = models.ForeignKey('rats.Residency', related_name='attendance', null=True)
-    start_time = models.DateTimeField(default=timezone.now)
-    end_time = models.DateTimeField(default=timezone.now)
+    start_time = models.TimeField(default='08:00:00')
+    end_time = models.TimeField(default='11:00:00')
     status = models.CharField(max_length=200, null=True)
     
     def start(self):
