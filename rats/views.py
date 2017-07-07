@@ -19,8 +19,18 @@ def home(request):
     if request.user.is_authenticated:
         residencies = Residency.objects.filter(user=request.user)
         attendances = Attendance.objects.filter(user=request.user)
-        projects = Project.objects.filter(user=request.user)
-        return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies, 'attendances':attendances})
+
+        teams = []
+        for team in Team.objects.all():
+            if (request.user in team.members.all()) or team.user == request.user:
+                teams.append(team)
+
+        projects = []
+        for proj in Project.objects.all():
+            if (request.user in proj.committee.all()) or proj.user == request.user:
+                projects.append(proj)
+
+        return render(request, 'rats/home.html',{'projects':projects, 'residencies':residencies, 'attendances':attendances, 'teams':teams})
     else:
         return redirect('login')
 
