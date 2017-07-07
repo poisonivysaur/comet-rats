@@ -131,19 +131,6 @@ def att_remove(request, pk):
 
 
 ################### TEAM MANAGEMENT MODULE ###################
-'''
-def teams(request):
-    if request.user.is_authenticated:
-        teams = Team.objects.filter(user=request.user).order_by('team_name')
-        return render(request, 'rats/teams.html', {'teams':teams})
-    else:
-        return redirect('login')
-'''
-
-
-
-
-
 def teams(request):
     if request.user.is_authenticated:
 
@@ -155,20 +142,6 @@ def teams(request):
         return render(request, 'rats/teams.html', {'teams':teams})
     else:
         return redirect('login')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def team_detail(request,pk):
@@ -289,5 +262,14 @@ def proj_remove(request, pk):
     proj = get_object_or_404(Project, pk=pk)
     proj.delete()
     return redirect('projects')
+
+
+################### RESIDENCY REPORT ####################
+def reports(request):
+    if request.user.is_authenticated:
+        attendances = Attendance.objects.filter(user=request.user).order_by('-residency__date')
+        return render(request, 'rats/reports.html', {'attendances':attendances})
+    else:
+        return redirect('login')
 
 

@@ -9,7 +9,6 @@
         <a href="{% url 'teams' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Teams</a>
         <a href="{% url 'projects' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-code fa-fw"></i>  Projects</a>
         <a href="{% url 'reports' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-clone fa-fw"></i>  Reports</a>
-
     </div>
 {% endblock %}
 
@@ -17,32 +16,35 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
-        <a href="{% url 'attendance' %}" style="text-decoration:none;"><h4><b><i class="fa fa-calendar"></i> Attendance Logging</b></h4></a>
-        <a href="{% url 'att_new' %}" style="text-decoration:none;"><h5><i class="fa fa-plus"></i> Log Attendance</h5></a>
+        <a href="{% url 'reports' %}" style="text-decoration:none;"><h4><b><i class="fa fa-clone"></i> Residency Attendance Report</b></h4></a>
     </header>
 
     <div class="w3-row-padding w3-margin-bottom" style="margin:20px 50px">
     {% block body%}
-        
+        <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+        <tr>
+            <th>Attendance</th>
+            <th>Residency Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Duration</th>
+            <th>Status</th>
+        </tr>
+
+        <tr>
         {% for att in attendances %}
-            <div class="w3-quarter" id="{{att.pk}}">
-            <a href="{% url 'att_detail' pk=att.pk %}" style="text-decoration:none;">
-            <div class="w3-container w3-red w3-padding-16" style="margin:16px 0;">
-                <div class="w3-left"><i class="fa fa-calendar w3-xlarge"></i></div>
-                <div class="w3-right">
-                   <h3>{{att.residency.date}}</h3>
-                </div>
-                <div class="w3-clear"></div>
-                {% if att.start_time != None %}<h5>Start at: {{att.start_time}}</h5>{% endif %}
-                {% if att.start_time != None %}<h5>Ends at: {{att.end_time}}</h5>{% endif %}
-                <h5>status: {{att.status}}</h5>
-            </div>
-            </a>
-            </div>
+            <td>{{ att.pk }}</td>
+            <td>{{ att.residency.date }}</td>
+            <td>{{ att.start_time }}</td>
+            <td>{{ att.end_time }}</td>
+            <td>{{ att.get_total_duration }}</td>
+            <td>{{ att.status }}</td>
+
+            </tr>
         {% empty %}
             <h3>No attendance logged yet :(</h3>
         {% endfor %}
-        
+        </table>
     {% endblock %}
     </div>
 

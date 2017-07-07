@@ -8,6 +8,7 @@
         <a href="{% url 'attendance' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-check-o fa-fw"></i>  Attendance</a>
         <a href="{% url 'teams' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Teams</a>
         <a href="{% url 'projects' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-code fa-fw"></i>  Projects</a>
+        <a href="{% url 'reports' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-clone fa-fw"></i>  Reports</a>
     </div>
 {% endblock %}
 
@@ -73,6 +74,7 @@
             
         </div>
 
+        <!--
         <div class="w3-panel">
             <div class="w3-row-padding" style="margin:0 -16px">
             <div class="w3-third">
@@ -237,6 +239,7 @@
             </div>
             </div>
         </div>
+        -->
     {% else %}
         
         <br><h2>Please Login to continue.</h2><hr>

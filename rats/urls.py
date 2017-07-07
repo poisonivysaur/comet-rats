@@ -30,5 +30,7 @@ urlpatterns = [
     url(r'^projects/(?P<pk>\d+)/$', views.proj_detail, name='proj_detail'),
     url(r'^projects/(?P<pk>\d+)/edit/$', views.proj_edit, name='proj_edit'),
     url(r'^projects/(?P<pk>\d+)/remove/$', views.proj_remove, name='proj_remove'),
+
+    url(r'^reports/$', views.reports, name='reports'),
     
 ]
