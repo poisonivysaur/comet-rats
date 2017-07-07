@@ -67,7 +67,8 @@ class Team(models.Model):
 
 
 class Project(models.Model):
-    user = models.ForeignKey('auth.User',null=True)
+    user = models.ForeignKey('auth.User', related_name='owner', null=True)
+    committee = models.ManyToManyField(User)
     name = models.CharField(max_length=100)
     desc = models.TextField(default="")
     due_date = models.DateField(blank=True, null=True)

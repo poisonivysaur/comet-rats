@@ -9,7 +9,10 @@
     <hr>
     <h1>{{ team.team_name }}</h1>
     <h5>{{ team.max_capacity }}</h5>
-    <h5>Team members: {{team.members}}</h5>
+    <h5>Team members: </h5>
+    {% for member in teams.member %}
+        {{team.members}}
+    {% endfor %}
     <h5>Project assigned: {{team.project}}</h5>
     <hr>
     
