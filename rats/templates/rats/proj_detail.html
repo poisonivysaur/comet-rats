@@ -2,7 +2,7 @@
 
 {% block body %}
     
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user == proj.user %}
     <a style="text-decoration:none;" href="{% url 'proj_edit' pk=proj.pk %}"><h5><i class="fa fa-edit"></i> Update Project</h5></a>
     <a style="text-decoration:none;" href="{% url 'proj_remove' pk=proj.pk %}"><h5><i class="fa fa-trash"></i> Remove Project</h5></a>
     {% endif %}

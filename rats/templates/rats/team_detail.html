@@ -2,16 +2,17 @@
 
 {% block body %}
     
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user == proj.user %}
     <a style="text-decoration:none;" href="{% url 'team_edit' pk=team.pk %}"><h5><i class="fa fa-edit"></i> Update Team</h5></a>
     <a style="text-decoration:none;" href="{% url 'team_remove' pk=team.pk %}"><h5><i class="fa fa-trash"></i> Remove Team</h5></a>
     {% endif %}
     <hr>
     <h1>{{ team.team_name }}</h1>
-    <h5>{{ team.max_capacity }}</h5>
+    <h5>Total members: {{ team.members.count }}</h5>
+    <h5>Maximum capacity: {{ team.max_capacity }}</h5>
     <h5>Team members: </h5>
-    {% for member in teams.member %}
-        {{team.members}}
+    {% for member in team.members.all %}
+        <h6><i class="fa fa-caret-square-o-right w3-large"></i> {{member}}</h6>
     {% endfor %}
     <h5>Project assigned: {{team.project}}</h5>
     <hr>

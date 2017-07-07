@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from .forms import UserForm, ProjForm, ResidencyForm, AttendanceForm, TeamForm
 from .models import *
 
+from itertools import chain
+
 # Create your views here.
 def toHomeURL(request):
     return redirect('home')
@@ -129,12 +131,45 @@ def att_remove(request, pk):
 
 
 ################### TEAM MANAGEMENT MODULE ###################
+'''
 def teams(request):
     if request.user.is_authenticated:
         teams = Team.objects.filter(user=request.user).order_by('team_name')
         return render(request, 'rats/teams.html', {'teams':teams})
     else:
         return redirect('login')
+'''
+
+
+
+
+
+def teams(request):
+    if request.user.is_authenticated:
+
+        teams = []
+        for team in Team.objects.all():
+            if (request.user in team.members.all()) or team.user == request.user:
+                teams.append(team)
+
+        return render(request, 'rats/teams.html', {'teams':teams})
+    else:
+        return redirect('login')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def team_detail(request,pk):
     team = get_object_or_404(Team, pk=pk)
@@ -148,6 +183,18 @@ def team_new(request):
             team = form.save(commit=False)
             team.user = request.user
             team.save()
+            team.project = form.cleaned_data['project']
+            team.members.clear()
+            team.members.add(request.user)  # adds the user creating the team
+
+            i = 0
+            for member in (form.cleaned_data['members']):  # adds until maximum capacity
+                if i < team.max_capacity:
+                    team.members.add(member)
+                    team.project.committee.add(member)
+                    i += 1
+            #team.members.add(form.fields['members'])
+
             return redirect ('team_detail', pk=team.pk)
     else:
         form = TeamForm(request.user)
@@ -162,6 +209,16 @@ def team_edit(request, pk):
         if form.is_valid():
             team = form.save(commit=False)
             team.user = request.user
+            team.project = form.cleaned_data['project']
+            team.members.clear()
+            team.members.add(request.user)  # adds the user creating the team
+            i = 0
+            for member in (form.cleaned_data['members']):   # adds until maximum capacity
+                if i < team.max_capacity:
+                    team.members.add(member)
+                    team.project.committee.add(member)
+                    i += 1
+            #team.members.add(form.fields['members'])
             team.save()
             return redirect('team_detail', pk=team.pk)
     else:
@@ -182,7 +239,15 @@ def team_member_detail():
 ################### PROJECT MANAGEMENT MODULE ###################
 def projects(request):
     if request.user.is_authenticated:
-        projects = Project.objects.filter(user=request.user).order_by('due_date')
+
+        owned = Project.objects.filter(user=request.user).order_by('due_date')
+        #involved = Project.objects.filter((request.user)__in=[Project.committee])
+        projects = []
+        for proj in Project.objects.all():
+            if (request.user in proj.committee.all()) or proj.user == request.user:
+                projects.append(proj)
+
+        #projects = sorted(chain(owned, involved),key=lambda instance: instance.date_created)
         return render(request, 'rats/projects.html', {'projects':projects})
     else:
         return redirect('login')

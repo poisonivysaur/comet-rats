@@ -56,11 +56,18 @@ class Team(models.Model):
     project = models.ForeignKey('rats.Project', null = True)
 
     @classmethod
-    def addMember(cls, user, new_team):
+    def addMember(cls, user, new_member):
         team, created = cls.objects.get_or_create(
             user = user
         )
-        team.members.add(new_team)
+        team.members.add(new_member)
+
+    @classmethod
+    def removeMember(cls, user, new_member):
+        team, created = cls.objects.get_or_create(
+            user=user
+        )
+        team.members.remove(new_member)
 
     def __str__(self):
         return str(self.team_name)
